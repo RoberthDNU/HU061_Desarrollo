@@ -40,6 +40,21 @@ IF (@ID_PadreDeCuentahabiente IS NOT NULL AND @ID_PadreDeCuentahabiente <> 0)
 	--		OBTENER ABUELO Y BISABUELO DE @ID_PADRE
 	--		SET @PADRE = ABUELO DEL @ID_PADRE
 	--		SET @ABUELO = BISABUELO DEL @ID_PADRE
+	IF(SELECT ClaveTipoColectiva FROM TipoColectiva tp INNER JOIN Colectivas col ON tp.ID_TipoColectiva = col.ID_TipoColectiva WHERE col.ID_Colectiva = @ID_PadreDeCuentahabiente ) ='SUC' 
+		BEGIN
+				SELECT  @ID_PadreDeCuentahabiente = ISNULL(BISABUELO.ID_ColectivaPadre, 0),
+						@ID_AbueloDeCuentahabiente =  ISNULL(TATARABUELO.ID_ColectivaPadre, 0)
+						--@ID_BisabueloDeCuentahabiente = ISNULL(BISABUELO.ID_ColectivaPadre, 0),
+						--@ID_TatarabueloDeCuentahabiente = ISNULL(TATARABUELO.ID_ColectivaPadre, 0)
+				FROM    dbo.Colectivas PADRE WITH (NOLOCK)
+						INNER JOIN dbo.Colectivas ABUELO WITH (NOLOCK)
+							ON ABUELO.ID_Colectiva = PADRE.ID_ColectivaPadre 
+						INNER JOIN dbo.Colectivas BISABUELO WITH (NOLOCK)
+							ON BISABUELO.ID_Colectiva = ABUELO.ID_ColectivaPadre
+						INNER JOIN dbo.Colectivas TATARABUELO WITH (NOLOCK)
+							ON TATARABUELO.ID_Colectiva = BISABUELO.ID_ColectivaPadre
+				WHERE   PADRE.ID_Colectiva = @Cuentahabiente;
+		END
 	--2) SI @ID_PADRE ES EMPRESA [ROBERTO]
 	--		OBTENER PADRE Y ABUELO DE @ID_PADRE
 	--		SET @PADRE = PADRE DEL @ID_PADRE
