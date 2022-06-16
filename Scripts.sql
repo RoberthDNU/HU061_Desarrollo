@@ -56,6 +56,14 @@ IF (@ID_PadreDeCuentahabiente IS NOT NULL AND @ID_PadreDeCuentahabiente <> 0)
 	--3) SI @ID_PADRE ES CLIENTE CACAO [SESIÓN ZOOM]
 	--		OBTENER PADRE DE @ID_PADRE
 	--		SET @ABUELO = PADRE DE @ID_PADRE
+	IF ((SELECT	tc.ClaveTipoColectiva
+		FROM	dbo.Colectivas c 
+		LEFT	JOIN dbo.TipoColectiva tc ON tc.ID_TipoColectiva = c.ID_TipoColectiva
+		WHERE	c.ID_Colectiva IN(@ID_PadreDeCuentahabiente)) = 'GCM')
+		BEGIN
+			SELECT @ID_AbueloDeCuentahabiente = ID_ColectivaPadre FROM dbo.Colectivas PADRE WITH(nolock) WHERE PADRE.ID_Colectiva = @ID_PadreDeCuentahabiente;
+			SELECT @ID_PadreDeCuentahabiente AS [@ID_PadreDeCuentahabiente], @ID_AbueloDeCuentahabiente AS [@ID_AbueloDeCuentahabiente];
+		END
 	END
 
 
