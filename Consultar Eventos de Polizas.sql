@@ -22,3 +22,4 @@ select * from dbo.TipoCuenta where ID_TipoCuenta = 54
 select * from dbo.MediosAcceso where ID_MA = 684731 
 select * from dbo.Cuentas WHERE ID_GrupoCuenta = 1159 AND ID_ColectivaCuentahabiente = 211785
 select * from dbo.Colectivas where ID_Colectiva IN(5683, 10);
+select * from dbo.PlugIns
