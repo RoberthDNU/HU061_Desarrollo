@@ -11,15 +11,30 @@ LEFT	JOIN dbo.Eventos ev ON ev.ID_Evento = po.ID_Evento
 WHERE	po.ID_Operacion IN(	
 							SELECT	ID_Operacion 
 							FROM	dbo.Operaciones 
-							WHERE	Autorizacion IN(/*'001877', '001881'*/ '001882')
+							WHERE	Autorizacion IN(/*'001877', '001881'*/ '001893')
 						  )
 ORDER BY pd.ID_PolizaDetalle;
 
 
 
 --Tarjetas Luis
-
+--empresa 9900012036066218
+--subempresa 9900012048767691
 
 --Tarjetas Roberto
 --9900012046474446 subempresa
 --9900012011858860 empresa
+
+
+ATM
+	TH del Cliente
+	TH de la Empresa
+	TH de la subempresa
+POS
+	TH del Cliente
+	TH de la Empresa
+	TH de la subempresa
+ECOM
+	TH del Cliente
+	TH de la Empresa
+	TH de la subempresa
