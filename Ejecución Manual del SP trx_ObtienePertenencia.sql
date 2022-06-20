@@ -13,7 +13,7 @@ DECLARE @ID_Pertenencia BIGINT ,
 		@ID_MA INT = 0;
 
 EXEC [dbo].[trx_ObtienePertenencia]
-    @MedioAcceso		= '9900099961581726' ,
+    @MedioAcceso		= '9900012036066218' ,
     @TipoMedioAcceso	= 'TAR',
     @CodigoMoneda		= '484',
     @Beneficiario		= '',
@@ -53,4 +53,17 @@ SELECT
     @ID_PadreDeCuentahabiente	AS [@ID_PadreDeCuentahabiente],
     @ID_AbueloDeCuentahabiente	AS [@ID_AbueloDeCuentahabiente],
     @ID_TipoCuenta				AS [@ID_TipoCuenta],
-    @ID_MA						AS [@ID_MA]
+    @ID_MA						AS [@ID_MA];
+
+
+	--SELECT c.ID_Colectiva as padre, ID_ColectivaPadre as abuelo, * FROM dbo.Producto p INNER JOIN dbo.Colectivas c on c.ID_Colectiva = p.ID_Colectiva WHERE p.ID_GrupoCuenta = 1159
+	--select * from dbo.MediosAcceso m inner join MediosAccesoCuenta c on c.ID_MA = m.ID_MA inner join Cuentas cu on cu.ID_Cuenta = c.ID_Cuenta WHERE m.ClaveMA = '9900012000270009'
+	--SELECT * FROM dbo.TipoProducto where ID_TipoProducto = 4
+
+	--SELECT	*
+	--		--p.ID_Colectiva, 
+	--		--c.ID_ColectivaPadre
+	--FROM	dbo.Producto p WITH(nolock)
+	--INNER	JOIN dbo.Colectivas c WITH(nolock)
+	--	on c.ID_Colectiva = p.ID_Colectiva 
+	--WHERE	p.ID_GrupoCuenta IN(1603,1159);
