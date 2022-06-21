@@ -305,33 +305,12 @@ AS
 
 
 	--OBTIENE EL PADRE Y ABUELO DEL CUENTAHABEINTE A NIEVEL RELACION ECONOMICA (LA RELACION PADRE-HIJO EN COLECTIVAS ES EXCLUSIVA DE RELACIONES DE JERARQUIAS)    
-
-        SELECT  @ID_PadreDeCuentahabiente = ISNULL(PADRE.ID_ColectivaPadre, 0) ,
-                @ID_AbueloDeCuentahabiente = ISNULL(ABUELO.ID_Colectiva, 0)
-        FROM    dbo.RelacionPadresColectivas PADRE WITH (NOLOCK)
-                LEFT JOIN dbo.RelacionPadresColectivas ABUELO WITH (NOLOCK)
-                    ON PADRE.ID_ColectivaPadre = ABUELO.ID_Colectiva
-        WHERE   PADRE.ID_Colectiva = @ID_CuentaHabiente; 
-
-
-	--SI EL PADRE O ABUELO ES NULL ENTONCES POR DEFUAL DNU ES EL PAPÁ O ABUELO O AMBAS.    
-        IF @ID_PadreDeCuentahabiente IS NULL
-            OR @ID_PadreDeCuentahabiente = 0
-            BEGIN
-                SELECT  @ID_PadreDeCuentahabiente = ISNULL(dbo.Colectivas.ID_Colectiva,
-                                                           0)
-                FROM    dbo.Colectivas WITH (NOLOCK)
-                WHERE   ClaveColectiva = 'CADDNU';
-            END;    
-
-        IF @ID_AbueloDeCuentahabiente IS NULL
-            OR @ID_AbueloDeCuentahabiente = 0
-            BEGIN
-                SELECT  @ID_AbueloDeCuentahabiente = ISNULL(dbo.Colectivas.ID_Colectiva,
-                                                            0)
-                FROM    dbo.Colectivas WITH (NOLOCK)
-                WHERE   ClaveColectiva = 'CADDNU';
-            END; 
+	SELECT	@ID_PadreDeCuentahabiente = p.ID_Colectiva, 
+			@ID_AbueloDeCuentahabiente = c.ID_ColectivaPadre
+	FROM	dbo.Producto p WITH(nolock)
+	INNER	JOIN dbo.Colectivas c WITH(nolock)
+		on c.ID_Colectiva = p.ID_Colectiva 
+	WHERE	p.ID_GrupoCuenta = @ID_GrupoCuenta;
 
 
 
